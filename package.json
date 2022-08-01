@@ -5,7 +5,7 @@
   "types": "dist/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "install": "rm -rf dist && tsc --build"
+    "install": "tsc --build"
   },
   "files": [
     "dist"
