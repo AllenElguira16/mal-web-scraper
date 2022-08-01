@@ -8,8 +8,6 @@ import { Anime } from "../../types/Anime";
 
 export const anime = async (malID: number) =>
   createPage(async (page): Promise<Anime> => {
-    console.log(`https://myanimelist.net/anime/${malID}`);
-
     await page.goto(`https://myanimelist.net/anime/${malID}`, {
       waitUntil: "domcontentloaded",
       timeout: 0,
