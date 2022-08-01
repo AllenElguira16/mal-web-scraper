@@ -1,5 +1,5 @@
-import { Page } from "puppeteer";
-import { createPage } from "../../helpers/page";
+import { Page } from "puppeteer-core";
+import { createPage } from "../../helpers";
 import { getCharactersOfAnime } from "./getCharactersOfAnime";
 import { getLeftSideInfo } from "./getLeftSideInfo";
 import { getRightSideInfo } from "./getRightSideInfo";
@@ -38,7 +38,7 @@ export const anime = async (malID: number) =>
     };
   });
 
-const getMainPageInfo = async (page: Page): Promise<Anime['info']> => {
+const getMainPageInfo = async (page: Page): Promise<Anime["info"]> => {
   const leftSideInfo = await getLeftSideInfo(page);
   const rightSideInfo = await getRightSideInfo(page);
 

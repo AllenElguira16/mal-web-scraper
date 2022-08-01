@@ -1,4 +1,4 @@
-import { Page } from "puppeteer";
+import { Page } from "puppeteer-core";
 
 export const getAbout = async (page: Page) => {
   return page.$$eval(".normal_header:nth-of-type(1)", ([nameElement]) => {

@@ -1,9 +1,9 @@
-import { Page } from "puppeteer";
+import { Page } from "puppeteer-core";
 import { Anime } from "../../types";
 
 export const getRightSideInfo = async (
   page: Page
-): Promise<Pick<Anime['info'], "synopsis" | "background">> => {
+): Promise<Pick<Anime["info"], "synopsis" | "background">> => {
   return {
     synopsis: await page.$$eval(
       ".rightside [itemprop=description]",

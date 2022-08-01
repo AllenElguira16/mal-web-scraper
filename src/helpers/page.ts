@@ -1,11 +1,14 @@
-import puppeteer, { Page } from "puppeteer";
-import { minimal_args } from "../const/minimal_args";
+import puppeteer, { Page } from "puppeteer-core";
+// @ts-ignore
+import chromium from "chromium";
+import { minimal_args } from "../const";
 
 export const createPage = async <T>(callback: (page: Page) => Promise<T>) => {
   const browser = await puppeteer.launch({
     headless: true,
     args: minimal_args,
     userDataDir: ".cache",
+    executablePath: chromium.path as string,
   });
   // Create a new incognito browser context.
   const context = await browser.createIncognitoBrowserContext();

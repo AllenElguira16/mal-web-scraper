@@ -1,7 +1,7 @@
-import { Page } from "puppeteer";
+import { Page } from "puppeteer-core";
 import { Anime } from "../../types";
 
-export const getLeftSideInfo = async (page: Page): Promise<Anime['info']> => {
+export const getLeftSideInfo = async (page: Page): Promise<Anime["info"]> => {
   const mainTitle = {
     english: await page.$$eval("p.title-english", (enTitleElement) => {
       return enTitleElement[0]?.textContent;
@@ -68,9 +68,9 @@ export const getLeftSideInfo = async (page: Page): Promise<Anime['info']> => {
 
 export const transformInfoData = (leftSideData: {
   [key: string]: string[];
-}): Omit<Anime['info'], "main_title"> => {
+}): Omit<Anime["info"], "main_title"> => {
   let synonyms: string[] = [];
-  let alternative_titles: Anime['info']['alternative_titles'] = {};
+  let alternative_titles: Anime["info"]["alternative_titles"] = {};
   // const { synonyms, ...otherLanguages } = (
   leftSideData.alternative_titles
     // Filter "More Titles" TextContent
@@ -94,7 +94,7 @@ export const transformInfoData = (leftSideData: {
 
       const baseKey = match[1].toLocaleLowerCase();
       let key = (baseKey === "theme" ? "themes" : baseKey) as Exclude<
-        keyof Anime['info'],
+        keyof Anime["info"],
         "synonyms" | "alternative_titles"
       >;
       let value: string | string[] | null | number = match[2];
@@ -120,7 +120,7 @@ export const transformInfoData = (leftSideData: {
       };
     })
     .reduce((obj, item) => ({ ...obj, ...item }), {}) as Omit<
-    Anime['info'],
+    Anime["info"],
     "main_title" | "alternative_titles" | "synonyms"
   >;
 

@@ -1,4 +1,4 @@
-import { Page } from "puppeteer";
+import { Page } from "puppeteer-core";
 import { CharacterOnAnime, VoiceActorOfCharacterOnAnime } from "../../types";
 
 export const getCharactersOfAnime = async (

@@ -1,4 +1,4 @@
-import { Page } from "puppeteer";
+import { Page } from "puppeteer-core";
 import { AnimeOfCharacter } from "../../types";
 
 export const getAnime = (page: Page) => {

@@ -1,5 +1,4 @@
-import { Page } from "puppeteer";
-import { createPage } from "../../helpers/page";
+import { createPage } from "../../helpers";
 import { getAnime } from "./getAnime";
 import { getAnimeStaff } from "./getAnimeStaff";
 
@@ -61,6 +60,3 @@ export const person = async (personId: number) =>
       staff,
     };
   });
-
-
-

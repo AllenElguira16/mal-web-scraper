@@ -1,9 +1,9 @@
-import { createPage } from "../../helpers/page";
+import { createPage } from "../../helpers";
 import { getAnime } from "./getAnime";
 import { getManga } from "./getManga";
 import { getNames } from "./getNames";
 import { getAbout } from "./getAbout";
-import { getVoiceActors } from './getVoiceActors';
+import { getVoiceActors } from "./getVoiceActors";
 
 export const character = (characterId: number) =>
   createPage(async (page) => {
@@ -25,5 +25,3 @@ export const character = (characterId: number) =>
       voice_actors: await getVoiceActors(page),
     };
   });
-
-
