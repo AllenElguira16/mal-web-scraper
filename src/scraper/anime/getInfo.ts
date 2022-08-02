@@ -186,7 +186,13 @@ const info = async (page: Page, key: string) => {
 
         if (
           textContent &&
-          ["None found,", "Unknown", "?"].includes(textContent)
+          [
+            "Not available",
+            "Not available",
+            "None found,",
+            "Unknown",
+            "?",
+          ].includes(textContent)
         )
           textContent = undefined;
 
