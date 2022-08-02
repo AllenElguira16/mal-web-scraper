@@ -4,8 +4,8 @@ import { Anime } from "../../types";
 export const getInfo = async (page: Page): Promise<Anime["info"]> => {
   const mainTitle = await page.$$eval(
     ".title-name > strong",
-    (romanizedTitleElement) => {
-      return romanizedTitleElement[0]?.textContent as string;
+    ([romanizedTitleElement]) => {
+      return romanizedTitleElement?.textContent as string;
     }
   );
 

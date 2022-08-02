@@ -7,7 +7,7 @@ export const getAnime = (page: Page) => {
     ([animeTableElement]) => {
       const anime: AnimeOfCharacter[] = [];
 
-      animeTableElement.querySelectorAll("tr").forEach((animeRowElement) => {
+      animeTableElement?.querySelectorAll("tr").forEach((animeRowElement) => {
         const animeLink = animeRowElement
           .querySelector("td:nth-of-type(1) a")
           ?.getAttribute("href") as string;

@@ -13,7 +13,7 @@ export const anime = async (malID: number) =>
 
     const link = await page.$$eval(
       ".breadcrumb > .di-ib:nth-of-type(3) > a",
-      ([e]) => e.getAttribute("href")
+      ([e]) => e?.getAttribute("href")
     );
 
     const info = await getInfo(page);

@@ -11,7 +11,7 @@ export const getManga = (page: Page) => {
         picture: string | null;
       }[] = [];
 
-      mangaTableElement.querySelectorAll("tr").forEach((mangaRowElement) => {
+      mangaTableElement?.querySelectorAll("tr").forEach((mangaRowElement) => {
         const mangaLink = mangaRowElement
           .querySelector("td:nth-of-type(1) a")
           ?.getAttribute("href") as string;

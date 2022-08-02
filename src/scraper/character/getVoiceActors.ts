@@ -7,7 +7,7 @@ export const getVoiceActors = (page: Page) => {
     (vaRowElements) => {
       const va: VoiceActorOfCharacter[] = [];
 
-      vaRowElements.forEach((vaRowElement) => {
+      vaRowElements?.forEach((vaRowElement) => {
         const vaLink = vaRowElement
           .querySelector("td:nth-of-type(1) a")
           ?.getAttribute("href") as string;

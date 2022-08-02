@@ -4,7 +4,7 @@ export const getAbout = async (page: Page) => {
   return page.$$eval(".normal_header:nth-of-type(1)", ([nameElement]) => {
     let about = "";
 
-    let currentSynopsisElement = nameElement.nextSibling;
+    let currentSynopsisElement = nameElement?.nextSibling || null;
 
     while (currentSynopsisElement) {
       if (

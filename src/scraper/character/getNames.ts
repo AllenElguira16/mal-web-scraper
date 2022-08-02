@@ -2,7 +2,7 @@ import { Page } from "puppeteer-core";
 
 export const getNames = async (page: Page) => {
   return page.$$eval(".normal_header:nth-of-type(1)", ([nameElement]) => {
-    const name = nameElement.textContent as string;
+    const name = nameElement?.textContent as string;
 
     const match = name.match(/\(([\S\s]+)\)/);
 

@@ -8,7 +8,7 @@ export const getStaffsOfAnime = async (page: Page): Promise<StaffOnAnime[]> => {
       return staffsElement.map((staffElement) => {
         const pictureLink =
           staffElement
-            .querySelector("td:nth-of-type(1) a img")
+            ?.querySelector("td:nth-of-type(1) a img")
             ?.getAttribute("src") || null;
 
         const staffLink = staffElement

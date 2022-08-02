@@ -42,7 +42,7 @@ export const person = async (personId: number) =>
 
     const picture = await page.$$eval(
       "table .borderClass img",
-      ([img]) => img.getAttribute("data-src") || null
+      ([img]) => img?.getAttribute("data-src") || null
     );
 
     const anime = await getAnime(page);
