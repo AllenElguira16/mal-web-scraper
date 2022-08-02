@@ -77,31 +77,9 @@ export const getInfo = async (page: Page): Promise<Anime["info"]> => {
     return textContent;
   });
 
-  const [picturesNavElement] = await page.$x(
-    '//li/a[contains(text(), "Pictures")]'
-  );
-
-  const picturesUrl = await picturesNavElement.evaluate(
-    (picturesNavNode) =>
-      (picturesNavNode as Element).getAttribute("href") as string
-  );
-
-  await page.goto(picturesUrl);
-
-  await scrollToBottom(page);
-
-  const pictures = await page.$$eval(
-    "tbody tr td .picSurround img",
-    (pictureElements) => {
-      const picturesData: string[] = [];
-      pictureElements.forEach((pictureElement) => {
-        const pictureLink = pictureElement.getAttribute("data-src") as string;
-
-        picturesData.push(pictureLink);
-      });
-
-      return picturesData;
-    }
+  const picture = await page.$$eval(
+    ".borderClass img:nth-of-type(1)",
+    ([imgNode]) => imgNode.getAttribute("data-src") as string
   );
 
   return {
@@ -125,7 +103,7 @@ export const getInfo = async (page: Page): Promise<Anime["info"]> => {
     rating,
     synopsis,
     background,
-    pictures,
+    picture,
   };
 };
 

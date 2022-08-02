@@ -21,7 +21,7 @@ export type Anime = {
     rating: string | null;
     synopsis: string | null;
     background: string | null;
-    pictures: string[];
+    picture: string;
   };
   characters: CharacterOnAnime[];
   staffs: StaffOnAnime[];

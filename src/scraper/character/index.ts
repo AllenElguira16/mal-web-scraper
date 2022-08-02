@@ -4,9 +4,10 @@ import { getManga } from "./getManga";
 import { getNames } from "./getNames";
 import { getAbout } from "./getAbout";
 import { getVoiceActors } from "./getVoiceActors";
+import { Character } from "../../types";
 
 export const character = (characterId: number) =>
-  createPage(async (page) => {
+  createPage(async (page): Promise<Character> => {
     await page.goto(`https://myanimelist.net/character/${characterId}`, {
       waitUntil: "domcontentloaded",
       timeout: 0,
@@ -16,10 +17,16 @@ export const character = (characterId: number) =>
 
     const about = await getAbout(page);
 
+    const picture = await page.$$eval(
+      ".borderClass img:nth-of-type(1)",
+      ([imgNode]) => imgNode.getAttribute("data-src") as string
+    );
+
     return {
       character_id: characterId,
       ...names,
       about,
+      picture,
       anime: await getAnime(page),
       manga: await getManga(page),
       voice_actors: await getVoiceActors(page),
