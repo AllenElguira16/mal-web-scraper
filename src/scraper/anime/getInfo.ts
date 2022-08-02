@@ -79,7 +79,7 @@ export const getInfo = async (page: Page): Promise<Anime["info"]> => {
 
   const picture = await page.$$eval(
     ".borderClass img:nth-of-type(1)",
-    ([imgNode]) => imgNode.getAttribute("data-src") || null
+    ([imgNode]) => imgNode?.getAttribute("data-src") || null
   );
 
   return {
