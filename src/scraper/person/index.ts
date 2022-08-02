@@ -6,7 +6,7 @@ import { getAnimeStaff } from "./getAnimeStaff";
 export const person = async (personId: number) =>
   createPage(async (page): Promise<Person> => {
     await page.goto(`https://myanimelist.net/people/${personId}`, {
-      waitUntil: "domcontentloaded",
+      waitUntil: "networkidle2",
       timeout: 0,
     });
 
