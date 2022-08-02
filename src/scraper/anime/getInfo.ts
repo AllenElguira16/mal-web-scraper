@@ -111,43 +111,45 @@ const getAlternativeTitles = async (page: Page) => {
     '//h2[contains(text(), "Alternative Titles")]'
   );
 
-  return alternativeTitlesElement.evaluate((alternativeTitlesNode) => {
-    const alternativeTitlesData: Anime["info"]["alternative_titles"] = {};
-    let currentElement = alternativeTitlesNode.nextSibling;
+  return (
+    alternativeTitlesElement?.evaluate((alternativeTitlesNode) => {
+      const alternativeTitlesData: Anime["info"]["alternative_titles"] = {};
+      let currentElement = alternativeTitlesNode.nextSibling;
 
-    while (currentElement) {
-      if (currentElement instanceof Element && currentElement.tagName === "A")
-        break;
+      while (currentElement) {
+        if (currentElement instanceof Element && currentElement.tagName === "A")
+          break;
 
-      const getTitles = (spacepadElement: Node) => {
-        const textContent = spacepadElement.textContent
-          ?.replace(/\n/g, "")
-          .trim() as string;
+        const getTitles = (spacepadElement: Node) => {
+          const textContent = spacepadElement.textContent
+            ?.replace(/\n/g, "")
+            .trim() as string;
 
-        if (textContent) {
-          const match = textContent.match(/(\S+)\: (.+)/);
+          if (textContent) {
+            const match = textContent.match(/(\S+)\: (.+)/);
 
-          if (match) {
-            const [, language, value] = match;
-            alternativeTitlesData[language.toLocaleLowerCase()] = value;
+            if (match) {
+              const [, language, value] = match;
+              alternativeTitlesData[language.toLocaleLowerCase()] = value;
+            }
           }
-        }
-      };
+        };
 
-      if (
-        currentElement instanceof Element &&
-        currentElement.classList.contains("js-alternative-titles")
-      ) {
-        currentElement.querySelectorAll(".spaceit_pad").forEach(getTitles);
-      } else {
-        getTitles(currentElement);
+        if (
+          currentElement instanceof Element &&
+          currentElement.classList.contains("js-alternative-titles")
+        ) {
+          currentElement.querySelectorAll(".spaceit_pad").forEach(getTitles);
+        } else {
+          getTitles(currentElement);
+        }
+
+        currentElement = currentElement.nextSibling;
       }
 
-      currentElement = currentElement.nextSibling;
-    }
-
-    return alternativeTitlesData;
-  });
+      return alternativeTitlesData;
+    }) || {}
+  );
 };
 
 const info = async (page: Page, key: string) => {
