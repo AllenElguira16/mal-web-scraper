@@ -1,10 +1,8 @@
-import { Page } from "puppeteer-core";
 import { createPage } from "../../helpers";
 import { getCharactersOfAnime } from "./getCharactersOfAnime";
-import { getLeftSideInfo } from "./getLeftSideInfo";
-import { getRightSideInfo } from "./getRightSideInfo";
 import { getStaffsOfAnime } from "./getStaffsOfAnime";
 import { Anime } from "../../types/Anime";
+import { getInfo } from "./getInfo";
 
 export const anime = async (malID: number) =>
   createPage(async (page): Promise<Anime> => {
@@ -13,35 +11,25 @@ export const anime = async (malID: number) =>
       timeout: 0,
     });
 
-    const mainPageInfo = await getMainPageInfo(page);
-
     const link = await page.$$eval(
       ".breadcrumb > .di-ib:nth-of-type(3) > a",
       ([e]) => e.getAttribute("href")
     );
+
+    const info = await getInfo(page);
 
     await page.goto(`${link}/characters`, {
       waitUntil: "domcontentloaded",
       timeout: 0,
     });
 
-    const charactersOfAnime = await getCharactersOfAnime(page);
-    const staffsOfAnime = await getStaffsOfAnime(page);
+    const characters = await getCharactersOfAnime(page);
+    const staffs = await getStaffsOfAnime(page);
 
     return {
       anime_id: malID,
-      info: mainPageInfo,
-      characters: charactersOfAnime,
-      staffs: staffsOfAnime,
+      info,
+      characters,
+      staffs,
     };
   });
-
-const getMainPageInfo = async (page: Page): Promise<Anime["info"]> => {
-  const leftSideInfo = await getLeftSideInfo(page);
-  const rightSideInfo = await getRightSideInfo(page);
-
-  return {
-    ...leftSideInfo,
-    ...rightSideInfo,
-  };
-};

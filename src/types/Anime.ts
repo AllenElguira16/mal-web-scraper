@@ -1,28 +1,27 @@
 export type Anime = {
   anime_id: number;
   info: {
-    main_title: {
-      english: string | null;
-      romanized: string | null;
-    };
+    main_title: string;
     alternative_titles: Record<string, string>;
-    episodes: number | null;
     synonyms: string[];
+    episodes: number | null;
     type: string | null;
-    status: string | null;
     aired: string | null;
-    premiered: string[];
-    broadcast: string[];
+    status: string | null;
+    premiered: string | null;
+    broadcast: string | null;
     producers: string[];
     licensors: string[];
     studios: string[];
     source: string | null;
     genres: string[];
     themes: string[];
+    demographics: string[];
     duration: string | null;
     rating: string | null;
     synopsis: string | null;
     background: string | null;
+    pictures: string[];
   };
   characters: CharacterOnAnime[];
   staffs: StaffOnAnime[];
