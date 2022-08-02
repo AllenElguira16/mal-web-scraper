@@ -12,9 +12,10 @@ export const getVoiceActors = (page: Page) => {
           .querySelector("td:nth-of-type(1) a")
           ?.getAttribute("href") as string;
 
-        const vaPicture = vaRowElement
-          .querySelector("td:nth-of-type(1) img")
-          ?.getAttribute("data-src") as string;
+        const vaPicture =
+          vaRowElement
+            .querySelector("td:nth-of-type(1) img")
+            ?.getAttribute("data-src") || null;
 
         const name = vaRowElement.querySelector("td:nth-of-type(2) > a")
           ?.textContent as string;

@@ -8,7 +8,7 @@ export const getManga = (page: Page) => {
         manga_id: number;
         title: string;
         role: string;
-        picture: string;
+        picture: string | null;
       }[] = [];
 
       mangaTableElement.querySelectorAll("tr").forEach((mangaRowElement) => {
@@ -16,9 +16,10 @@ export const getManga = (page: Page) => {
           .querySelector("td:nth-of-type(1) a")
           ?.getAttribute("href") as string;
 
-        const mangaPicture = mangaRowElement
-          .querySelector("td:nth-of-type(1) img")
-          ?.getAttribute("data-src") as string;
+        const mangaPicture =
+          mangaRowElement
+            .querySelector("td:nth-of-type(1) img")
+            ?.getAttribute("data-src") || null;
 
         const title = mangaRowElement.querySelector("td:nth-of-type(2) a")
           ?.textContent as string;

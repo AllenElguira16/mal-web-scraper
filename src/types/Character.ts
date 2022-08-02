@@ -6,26 +6,26 @@ export type Character = {
   voice_actors: VoiceActorOfCharacter[];
   native_name: string;
   english_name: string;
-  picture: string;
+  picture: string | null;
 };
 
 export type AnimeOfCharacter = {
   anime_id: number;
   title: string;
   role: string;
-  picture: string;
+  picture: string | null;
 };
 
 export type MangaOfCharacter = {
   manga_id: number;
   title: string;
   role: string;
-  picture: string;
+  picture: string | null;
 };
 
 export type VoiceActorOfCharacter = {
   person_id: number;
   name: string;
-  picture: string;
+  picture: string | null;
   language: string;
 };

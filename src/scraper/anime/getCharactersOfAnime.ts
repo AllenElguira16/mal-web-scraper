@@ -13,9 +13,10 @@ export const getCharactersOfAnime = async (
             .querySelector("td:nth-of-type(1) a")
             ?.getAttribute("href");
 
-          const pictureLink = characterTableElement
-            .querySelector("td:nth-of-type(1) a img")
-            ?.getAttribute("data-src");
+          const pictureLink =
+            characterTableElement
+              .querySelector("td:nth-of-type(1) a img")
+              ?.getAttribute("data-src") || null;
 
           if (!characterLink || !pictureLink) return;
 

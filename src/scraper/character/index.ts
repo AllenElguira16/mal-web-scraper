@@ -19,7 +19,7 @@ export const character = (characterId: number) =>
 
     const picture = await page.$$eval(
       ".borderClass img:nth-of-type(1)",
-      ([imgNode]) => imgNode.getAttribute("data-src") as string
+      ([imgNode]) => imgNode.getAttribute("data-src") || null
     );
 
     return {

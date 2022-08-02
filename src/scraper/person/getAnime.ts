@@ -20,9 +20,10 @@ export const getAnime = async (page: Page) => {
             .querySelector("td:nth-of-type(1) a")
             ?.getAttribute("href") as string;
 
-          const animePicture = animeRowElement
-            .querySelector("td:nth-of-type(1) img")
-            ?.getAttribute("data-src") as string;
+          const animePicture =
+            animeRowElement
+              .querySelector("td:nth-of-type(1) img")
+              ?.getAttribute("data-src") || null;
 
           const animeTitle = animeRowElement.querySelector(
             "td:nth-of-type(2) > .spaceit_pad:nth-of-type(1) > a"
@@ -40,9 +41,10 @@ export const getAnime = async (page: Page) => {
             "td:nth-of-type(3) .spaceit_pad:nth-of-type(2)"
           )?.textContent as string;
 
-          const characterPicture = animeRowElement
-            .querySelector("td:nth-of-type(4) img")
-            ?.getAttribute("data-src") as string;
+          const characterPicture =
+            animeRowElement
+              .querySelector("td:nth-of-type(4) img")
+              ?.getAttribute("data-src") || null;
 
           anime.push({
             anime_id: parseInt(

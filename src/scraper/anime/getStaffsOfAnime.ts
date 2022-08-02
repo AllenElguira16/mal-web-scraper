@@ -6,9 +6,10 @@ export const getStaffsOfAnime = async (page: Page): Promise<StaffOnAnime[]> => {
     ".border_solid ~ table",
     (staffsElement): (StaffOnAnime | undefined)[] => {
       return staffsElement.map((staffElement) => {
-        const pictureLink = staffElement
-          .querySelector("td:nth-of-type(1) a img")
-          ?.getAttribute("src");
+        const pictureLink =
+          staffElement
+            .querySelector("td:nth-of-type(1) a img")
+            ?.getAttribute("src") || null;
 
         const staffLink = staffElement
           .querySelector("td:nth-of-type(1) a")
@@ -30,7 +31,7 @@ export const getStaffsOfAnime = async (page: Page): Promise<StaffOnAnime[]> => {
           staff_id: parseInt(staffID),
           name,
           role,
-          picture: pictureLink || null,
+          picture: pictureLink,
         };
       });
     }

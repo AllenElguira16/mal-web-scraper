@@ -12,9 +12,10 @@ export const getAnime = (page: Page) => {
           .querySelector("td:nth-of-type(1) a")
           ?.getAttribute("href") as string;
 
-        const animePicture = animeRowElement
-          .querySelector("td:nth-of-type(1) img")
-          ?.getAttribute("data-src") as string;
+        const animePicture =
+          animeRowElement
+            .querySelector("td:nth-of-type(1) img")
+            ?.getAttribute("data-src") || null;
 
         const title = animeRowElement.querySelector("td:nth-of-type(2) a")
           ?.textContent as string;
