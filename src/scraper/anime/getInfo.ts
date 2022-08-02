@@ -1,4 +1,3 @@
-import { scrollToBottom } from "../../helpers";
 import { Page } from "puppeteer-core";
 import { Anime } from "../../types";
 

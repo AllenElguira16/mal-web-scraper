@@ -4,7 +4,7 @@ export type Character = {
   anime: AnimeOfCharacter[];
   manga: MangaOfCharacter[];
   voice_actors: VoiceActorOfCharacter[];
-  native_name: string;
+  native_name: string | null;
   english_name: string;
   picture: string | null;
 };
