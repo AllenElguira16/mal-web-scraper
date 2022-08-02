@@ -1,9 +1,10 @@
+import { Person } from "../../types";
 import { createPage } from "../../helpers";
 import { getAnime } from "./getAnime";
 import { getAnimeStaff } from "./getAnimeStaff";
 
 export const person = async (personId: number) =>
-  createPage(async (page) => {
+  createPage(async (page): Promise<Person> => {
     await page.goto(`https://myanimelist.net/people/${personId}`, {
       waitUntil: "domcontentloaded",
       timeout: 0,
@@ -39,11 +40,10 @@ export const person = async (personId: number) =>
         birthDateNode.nextSibling?.textContent?.trim()
       )) || null;
 
-    const picture =
-      (await page.$$eval(
-        "table .borderClass img",
-        ([img]) => img.getAttribute("data-src") as string
-      )) || null;
+    const picture = await page.$$eval(
+      "table .borderClass img",
+      ([img]) => img.getAttribute("data-src") as string
+    );
 
     const anime = await getAnime(page);
 
