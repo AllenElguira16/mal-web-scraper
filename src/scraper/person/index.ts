@@ -1,14 +1,16 @@
 import { Person } from "../../types";
-import { createPage } from "../../helpers";
+import { createPage, scrollToBottom } from "../../helpers";
 import { getAnime } from "./getAnime";
 import { getAnimeStaff } from "./getAnimeStaff";
 
 export const person = async (personId: number) =>
   createPage(async (page): Promise<Person> => {
     await page.goto(`https://myanimelist.net/people/${personId}`, {
-      waitUntil: "networkidle2",
+      waitUntil: "domcontentloaded",
       timeout: 0,
     });
+
+    await scrollToBottom(page);
 
     const englishName = await page.$$eval(
       ".title-name.h1_bold_none",
