@@ -2,7 +2,7 @@ export type Anime = {
   anime_id: number;
   info: {
     main_title: string;
-    alternative_titles: Record<string, string>;
+    alternative_titles: Partial<Record<string, string>>;
     synonyms: string[];
     episodes: number | null;
     type: string | null;
