@@ -13,6 +13,7 @@
   "dependencies": {
     "@types/node": "^18.0.3",
     "axios": "^0.27.2",
+    "playwright-core": "^1.24.2",
     "puppeteer": "^15.5.0",
     "puppeteer-extra": "^3.3.4",
     "puppeteer-extra-plugin-recaptcha": "^3.6.6",
