@@ -2,6 +2,8 @@ import { Page } from "puppeteer";
 import puppeteer from "puppeteer-extra";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
 import RecaptchaPlugin from "puppeteer-extra-plugin-recaptcha";
+import path from "path";
+
 import { minimal_args } from "../const";
 
 export const createPage = async <T>(callback: (page: Page) => Promise<T>) => {
@@ -11,7 +13,7 @@ export const createPage = async <T>(callback: (page: Page) => Promise<T>) => {
   const browser = await puppeteer.launch({
     headless: true,
     args: minimal_args,
-    userDataDir: ".cache",
+    userDataDir: path.resolve(process.cwd(), ".cache"),
     // executablePath: chromium.path as string,
   });
   // Create a new incognito browser context.
