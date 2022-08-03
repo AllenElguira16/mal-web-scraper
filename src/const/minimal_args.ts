@@ -37,6 +37,5 @@ export const minimal_args = [
   "--password-store=basic",
   "--use-gl=swiftshader",
   "--use-mock-keychain",
-  // "--disable-gpu",
-  // "--single-process"
+  '--user-agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3312.0 Safari/537.36"',
 ];
