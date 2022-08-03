@@ -13,8 +13,7 @@ export const createPage = async <T>(callback: (page: Page) => Promise<T>) => {
   const browser = await puppeteer.launch({
     headless: true,
     args: minimal_args,
-    userDataDir: path.resolve(process.cwd(), ".cache"),
-    // executablePath: chromium.path as string,
+    userDataDir: path.resolve(__dirname, "../../.cache"),
   });
   // Create a new incognito browser context.
   const context = await browser.createIncognitoBrowserContext();
