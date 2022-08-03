@@ -1,10 +1,12 @@
 import { Page } from "puppeteer";
 import puppeteer from "puppeteer-extra";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
+import RecaptchaPlugin from "puppeteer-extra-plugin-recaptcha";
 import { minimal_args } from "../const";
 
 export const createPage = async <T>(callback: (page: Page) => Promise<T>) => {
   puppeteer.use(StealthPlugin());
+  puppeteer.use(RecaptchaPlugin());
 
   const browser = await puppeteer.launch({
     headless: true,
