@@ -1,14 +1,16 @@
-import puppeteer, { Page } from "puppeteer-core";
-// @ts-ignore
-import chromium from "chromium";
+import { Page } from "puppeteer";
+import puppeteer from "puppeteer-extra";
+import StealthPlugin from "puppeteer-extra-plugin-stealth";
 import { minimal_args } from "../const";
 
 export const createPage = async <T>(callback: (page: Page) => Promise<T>) => {
+  puppeteer.use(StealthPlugin());
+
   const browser = await puppeteer.launch({
     headless: true,
     args: minimal_args,
     userDataDir: ".cache",
-    executablePath: chromium.path as string,
+    // executablePath: chromium.path as string,
   });
   // Create a new incognito browser context.
   const context = await browser.createIncognitoBrowserContext();

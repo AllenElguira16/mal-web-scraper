@@ -1,4 +1,4 @@
-import { Page } from "puppeteer-core";
+import { Page } from "puppeteer";
 import { Anime } from "../../types";
 
 export const getInfo = async (page: Page): Promise<Anime["info"]> => {

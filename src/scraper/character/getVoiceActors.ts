@@ -1,4 +1,4 @@
-import { Page } from "puppeteer-core";
+import { Page } from "puppeteer";
 import { VoiceActorOfCharacter } from "../../types";
 
 export const getVoiceActors = (page: Page) => {

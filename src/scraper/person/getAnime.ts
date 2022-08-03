@@ -1,4 +1,4 @@
-import { Page } from "puppeteer-core";
+import { Page } from "puppeteer";
 import { AnimeOfPerson } from "../../types";
 
 export const getAnime = async (page: Page) => {

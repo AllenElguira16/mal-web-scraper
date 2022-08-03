@@ -1,4 +1,4 @@
-import { Page } from "puppeteer-core";
+import { Page } from "puppeteer";
 import { StaffOfPerson } from "../../types";
 
 export const getAnimeStaff = async (page: Page) => {
