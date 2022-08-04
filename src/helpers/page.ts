@@ -1,7 +1,8 @@
-import { Page } from "puppeteer";
+import { Page, DEFAULT_INTERCEPT_RESOLUTION_PRIORITY } from "puppeteer";
 import puppeteer from "puppeteer-extra";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
 import RecaptchaPlugin from "puppeteer-extra-plugin-recaptcha";
+import AdblockerPlugin from "puppeteer-extra-plugin-adblocker";
 import path from "path";
 
 import { minimal_args } from "../const";
@@ -9,6 +10,11 @@ import { minimal_args } from "../const";
 export const createPage = async <T>(callback: (page: Page) => Promise<T>) => {
   puppeteer.use(StealthPlugin());
   puppeteer.use(RecaptchaPlugin());
+  puppeteer.use(
+    AdblockerPlugin({
+      interceptResolutionPriority: DEFAULT_INTERCEPT_RESOLUTION_PRIORITY,
+    })
+  );
 
   const browser = await puppeteer.launch({
     headless: true,
@@ -36,7 +42,7 @@ export const createPage = async <T>(callback: (page: Page) => Promise<T>) => {
 
   if (isPageCaptcha) await page.click('.g-recaptcha[data-action="submit"]');
 
-  await page.waitForFunction(() => document.readyState === "complete");
+  await page.waitForNavigation({ waitUntil: "networkidle0" });
 
   const data = await callback(page);
 
