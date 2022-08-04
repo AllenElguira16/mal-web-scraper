@@ -12,9 +12,7 @@ export const person = async (personId: number) =>
 
     await scrollToBottom(page);
 
-    await page.waitForXPath('//*[contains(text(), "Given name:")]');
-    await page.waitForXPath('//*[contains(text(), "Family name:")]');
-    await page.waitForXPath('//*[contains(text(), "Birthday:")]');
+    await page.waitForSelector(".title-name.h1_bold_none");
 
     const englishName = await page.$$eval(
       ".title-name.h1_bold_none",
