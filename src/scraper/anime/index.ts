@@ -4,11 +4,11 @@ import { getStaffsOfAnime } from "./getStaffsOfAnime";
 import { Anime } from "../../types/Anime";
 import { getInfo } from "./getInfo";
 
-export const anime = async (malID: number) =>
+export const anime = async (animeMalID: number) =>
   createPage(async (page): Promise<Anime> => {
-    await page.goto(`https://myanimelist.net/anime/${malID}`, {
+    await page.goto(`https://myanimelist.net/anime/${animeMalID}`, {
       waitUntil: "domcontentloaded",
-      timeout: 0,
+      timeout: 50000,
     });
 
     const link = await page.$$eval(
@@ -20,14 +20,14 @@ export const anime = async (malID: number) =>
 
     await page.goto(`${link}/characters`, {
       waitUntil: "domcontentloaded",
-      timeout: 0,
+      timeout: 50000,
     });
 
     const characters = await getCharactersOfAnime(page);
     const staffs = await getStaffsOfAnime(page);
 
     return {
-      anime_id: malID,
+      anime_id: animeMalID,
       info,
       characters,
       staffs,

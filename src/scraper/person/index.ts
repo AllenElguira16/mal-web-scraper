@@ -7,10 +7,14 @@ export const person = async (personId: number) =>
   createPage(async (page): Promise<Person> => {
     await page.goto(`https://myanimelist.net/people/${personId}`, {
       waitUntil: "domcontentloaded",
-      timeout: 0,
+      timeout: 50000,
     });
 
     await scrollToBottom(page);
+
+    await page.waitForXPath('//*[contains(text(), "Given name:")]');
+    await page.waitForXPath('//*[contains(text(), "Family name:")]');
+    await page.waitForXPath('//*[contains(text(), "Birthday:")]');
 
     const englishName = await page.$$eval(
       ".title-name.h1_bold_none",

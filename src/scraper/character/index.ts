@@ -1,4 +1,4 @@
-import { createPage } from "../../helpers";
+import { createPage, scrollToBottom } from "../../helpers";
 import { getAnime } from "./getAnime";
 import { getManga } from "./getManga";
 import { getNames } from "./getNames";
@@ -10,8 +10,12 @@ export const character = (characterId: number) =>
   createPage(async (page): Promise<Character> => {
     await page.goto(`https://myanimelist.net/character/${characterId}`, {
       waitUntil: "domcontentloaded",
-      timeout: 0,
+      timeout: 50000,
     });
+
+    await scrollToBottom(page);
+
+    await page.waitForSelector(".normal_header:nth-of-type(1)");
 
     const names = await getNames(page);
 
