@@ -1,4 +1,4 @@
-import { createPage } from "../../helpers";
+import { createPage, skipBot } from "../../helpers";
 import { getCharactersOfAnime } from "./getCharactersOfAnime";
 import { getStaffsOfAnime } from "./getStaffsOfAnime";
 import { Anime } from "../../types/Anime";
@@ -10,6 +10,8 @@ export const anime = async (animeMalID: number) =>
       waitUntil: "domcontentloaded",
       timeout: 50000,
     });
+
+    await skipBot(page);
 
     const link = await page.$$eval(
       ".breadcrumb > .di-ib:nth-of-type(3) > a",

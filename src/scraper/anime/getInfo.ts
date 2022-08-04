@@ -1,7 +1,9 @@
 import { Page } from "puppeteer";
 import { Anime } from "../../types";
 
-export const getInfo = async (page: Page): Promise<Anime["info"]> => {
+export const getInfo = async (
+  page: Page
+): Promise<Anime["info"]> /* NOSONAR */ => {
   const mainTitle = await page.$$eval(
     ".title-name > strong",
     ([romanizedTitleElement]) => {

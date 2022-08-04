@@ -7,7 +7,9 @@ import path from "path";
 
 import { minimal_args } from "../const";
 
-export const createPage = async <T>(callback: (page: Page) => Promise<T>) => {
+export const createPage = async <T>(
+  callback: (page: Page) => Promise<T>
+): Promise<T> => {
   puppeteer.use(StealthPlugin());
   puppeteer.use(RecaptchaPlugin());
   puppeteer.use(
@@ -21,40 +23,32 @@ export const createPage = async <T>(callback: (page: Page) => Promise<T>) => {
     args: minimal_args,
     userDataDir: path.resolve(__dirname, "../../.cache"),
   });
-  // Create a new incognito browser context.
-  const context = await browser.createIncognitoBrowserContext();
-  // Create a new page in a pristine context.
-  const page = await context.newPage();
 
-  const blocked_domains = ["googlesyndication.com", "adservice.google.com"];
+  try {
+    // Create a new incognito browser context.
+    const context = await browser.createIncognitoBrowserContext();
+    // Create a new page in a pristine context.
+    const page = await context.newPage();
 
-  await page.setRequestInterception(true);
+    const blocked_domains = ["googlesyndication.com", "adservice.google.com"];
 
-  page.on("request", (request) => {
-    const url = request.url();
-    if (blocked_domains.some((domain) => url.includes(domain))) request.abort();
-    else request.continue();
-  });
+    await page.setRequestInterception(true);
 
-  const isPageCaptcha = await page.evaluate(
-    () => !!document.querySelector('.g-recaptcha[data-action="submit"]')
-  );
+    page.on("request", (request) => {
+      const url = request.url();
+      if (blocked_domains.some((domain) => url.includes(domain)))
+        request.abort();
+      else request.continue();
+    });
 
-  if (isPageCaptcha) {
-    await page.click('.g-recaptcha[data-action="submit"]');
+    const data = await callback(page);
 
-    await page.waitForNavigation({ waitUntil: "networkidle0" });
+    await browser.close();
 
-    await page.click('.g-recaptcha[data-action="submit"]');
+    return data;
+  } catch (error) {
+    await browser.close();
 
-    await page.waitForNavigation({ waitUntil: "networkidle0" });
-
-    await page.reload();
+    throw error;
   }
-
-  const data = await callback(page);
-
-  await browser.close();
-
-  return data;
 };

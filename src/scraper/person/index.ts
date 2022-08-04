@@ -1,5 +1,5 @@
 import { Person } from "../../types";
-import { createPage, scrollToBottom } from "../../helpers";
+import { createPage, scrollToBottom, skipBot } from "../../helpers";
 import { getAnime } from "./getAnime";
 import { getAnimeStaff } from "./getAnimeStaff";
 
@@ -9,6 +9,8 @@ export const person = async (personId: number) =>
       waitUntil: "domcontentloaded",
       timeout: 50000,
     });
+
+    await skipBot(page);
 
     await scrollToBottom(page);
 
