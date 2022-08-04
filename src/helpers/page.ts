@@ -44,6 +44,12 @@ export const createPage = async <T>(callback: (page: Page) => Promise<T>) => {
     await page.click('.g-recaptcha[data-action="submit"]');
 
     await page.waitForNavigation({ waitUntil: "networkidle0" });
+
+    await page.click('.g-recaptcha[data-action="submit"]');
+
+    await page.waitForNavigation({ waitUntil: "networkidle0" });
+
+    await page.reload();
   }
 
   const data = await callback(page);
