@@ -36,13 +36,15 @@ export const createPage = async <T>(callback: (page: Page) => Promise<T>) => {
     else request.continue();
   });
 
-  const isPageCaptcha = await page.evaluate(() => {
-    return !!document.querySelector('.g-recaptcha[data-action="submit"]');
-  });
+  const isPageCaptcha = await page.evaluate(
+    () => !!document.querySelector('.g-recaptcha[data-action="submit"]')
+  );
 
-  if (isPageCaptcha) await page.click('.g-recaptcha[data-action="submit"]');
+  if (isPageCaptcha) {
+    await page.click('.g-recaptcha[data-action="submit"]');
 
-  await page.waitForNavigation({ waitUntil: "networkidle0" });
+    await page.waitForNavigation({ waitUntil: "networkidle0" });
+  }
 
   const data = await callback(page);
 
