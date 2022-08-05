@@ -15,13 +15,14 @@ export const getStaffsOfAnime = async (page: Page): Promise<StaffOnAnime[]> => {
           .querySelector("td:nth-of-type(1) a")
           ?.getAttribute("href");
 
-        const name = staffElement.querySelector(
-          "td:nth-of-type(2) > a"
-        )?.textContent;
+        const name = staffElement
+          .querySelector("td:nth-of-type(2) > a")
+          ?.textContent?.trim();
 
         const role = staffElement
           .querySelector("td:nth-of-type(2) div > small")
-          ?.textContent?.split(",");
+          ?.textContent?.split(",")
+          .map((e) => e.trim());
 
         if (!staffLink || !name || !role) return;
 
