@@ -24,7 +24,7 @@ export const character = (characterId: number) =>
     const about = await getAbout(page);
 
     const picture = await page.$$eval(
-      ".borderClass img:nth-of-type(1)",
+      "#content > table > tbody > tr > td:nth-of-type(1).borderClass > div > a > img",
       ([imgNode]) => imgNode?.getAttribute("data-src") || null
     );
 

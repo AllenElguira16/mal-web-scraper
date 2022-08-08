@@ -47,7 +47,7 @@ export const person = async (personId: number) =>
       )) || null;
 
     const picture = await page.$$eval(
-      "table .borderClass img",
+      "#content > table > tbody > tr > td:nth-of-type(1).borderClass > div > a > img",
       ([img]) => img?.getAttribute("data-src") || null
     );
 

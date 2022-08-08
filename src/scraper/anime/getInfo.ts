@@ -119,7 +119,10 @@ const getAlternativeTitles = async (page: Page) => {
       let currentElement = alternativeTitlesNode.nextSibling;
 
       while (currentElement) {
-        if (currentElement instanceof Element && currentElement.tagName === "A")
+        if (
+          currentElement instanceof Element &&
+          currentElement.tagName === "H2"
+        )
           break;
 
         const getTitles = (spacepadElement: Node) => {
