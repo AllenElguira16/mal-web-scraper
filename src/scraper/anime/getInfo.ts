@@ -48,18 +48,19 @@ export const getInfo = async (
 
   const [synopsisElement] = await page.$x('//h2[contains(text(), "Synopsis")]');
 
-  const synopsis = await synopsisElement.evaluate((synopsisNode) => {
-    let textContent =
-      synopsisNode.parentElement?.nextSibling?.textContent?.trim() || null;
+  const synopsis =
+    (await synopsisElement?.evaluate((synopsisNode) => {
+      let textContent =
+        synopsisNode.parentElement?.nextSibling?.textContent?.trim() || null;
 
-    if (
-      textContent ===
-      "No synopsis information has been added to this title. Help improve our database by adding a synopsis here."
-    )
-      textContent = null;
+      if (
+        textContent ===
+        "No synopsis information has been added to this title. Help improve our database by adding a synopsis here."
+      )
+        textContent = null;
 
-    return textContent;
-  });
+      return textContent;
+    })) || null;
 
   const [backgroundElement] = await page.$x(
     '//h2[contains(text(), "Background")]'
