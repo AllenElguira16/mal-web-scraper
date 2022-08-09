@@ -66,18 +66,19 @@ export const getInfo = async (
     '//h2[contains(text(), "Background")]'
   );
 
-  const background = await backgroundElement.evaluate((backgroundNode) => {
-    let textContent =
-      backgroundNode.parentElement?.nextSibling?.textContent?.trim() || null;
+  const background =
+    (await backgroundElement?.evaluate((backgroundNode) => {
+      let textContent =
+        backgroundNode.parentElement?.nextSibling?.textContent?.trim() || null;
 
-    if (
-      textContent ===
-      "No background information has been added to this title. Help improve our database by adding background information"
-    )
-      textContent = null;
+      if (
+        textContent ===
+        "No background information has been added to this title. Help improve our database by adding background information"
+      )
+        textContent = null;
 
-    return textContent;
-  });
+      return textContent;
+    })) || null;
 
   const picture = await page.$$eval(
     ".borderClass img:nth-of-type(1)",

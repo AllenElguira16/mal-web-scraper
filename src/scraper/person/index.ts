@@ -14,7 +14,9 @@ export const person = async (page: Page, personId: number): Promise<Person> => {
 
   await scrollToBottom(page);
 
-  await page.waitForSelector(".title-name.h1_bold_none");
+  await page.waitForSelector(".title-name.h1_bold_none", {
+    timeout: 50000,
+  });
 
   const englishName = await page.$$eval(
     ".title-name.h1_bold_none",
