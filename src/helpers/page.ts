@@ -22,32 +22,31 @@ export const createPage = async <T>(
     userDataDir: path.resolve(__dirname, "../../.cache"),
   });
 
-  try {
-    // Create a new incognito browser context.
-    const context = await browser.createIncognitoBrowserContext();
-    // Create a new page in a pristine context.
-    const page = await context.newPage();
+  // try {
+  // Create a new incognito browser context.
+  const context = await browser.createIncognitoBrowserContext();
+  // Create a new page in a pristine context.
+  const page = await context.newPage();
 
-    const blocked_domains = ["googlesyndication.com", "adservice.google.com"];
+  const blocked_domains = ["googlesyndication.com", "adservice.google.com"];
 
-    await page.setRequestInterception(true);
+  await page.setRequestInterception(true);
 
-    page.on("request", (request) => {
-      const url = request.url();
-      if (blocked_domains.some((domain) => url.includes(domain)))
-        request.abort();
-      else request.continue();
-    });
+  page.on("request", (request) => {
+    const url = request.url();
+    if (blocked_domains.some((domain) => url.includes(domain))) request.abort();
+    else request.continue();
+  });
 
-    const data = await callback(page);
+  const data = await callback(page);
 
-    await browser.close();
-    // await page.close();
+  // await browser.close();
+  // await page.close();
 
-    return data;
-  } catch (error) {
-    await browser.close();
+  return data;
+  // } catch (error) {
+  //   await browser.close();
 
-    throw error;
-  }
+  //   throw error;
+  // }
 };
