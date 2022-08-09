@@ -115,9 +115,9 @@
   integrity sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==
 
 "@types/node@*", "@types/node@^18.0.3":
-  version "18.6.3"
-  resolved "https://registry.npmjs.org/@types/node/-/node-18.6.3.tgz#4e4a95b6fe44014563ceb514b2598b3e623d1c98"
-  integrity sha512-6qKpDtoaYLM+5+AFChLhHermMQxc3TOEFIDzrZLPRGHPrLEwqFkkT5Kx3ju05g6X7uDPazz3jHbKPX0KzCjntg==
+  version "18.6.5"
+  resolved "https://registry.npmjs.org/@types/node/-/node-18.6.5.tgz#06caea822caf9e59d5034b695186ee74154d2802"
+  integrity sha512-Xjt5ZGUa5WusGZJ4WJPbOT8QOqp6nDynVFRKcUt32bOgvXEoc6o085WNkYTMO7ifAj2isEfQQ2cseE+wT6jsRw==
 
 "@types/yauzl@^2.9.1":
   version "2.10.0"
@@ -568,9 +568,9 @@ pump@^3.0.0:
     once "^1.3.1"
 
 puppeteer-extra-plugin-adblocker@^2.13.4:
-  version "2.13.4"
-  resolved "https://registry.npmjs.org/puppeteer-extra-plugin-adblocker/-/puppeteer-extra-plugin-adblocker-2.13.4.tgz#ee0bf6e606d384eb93e560f09e574118d578d426"
-  integrity sha512-52tP0VACzssUWPgKaRb7YEXVhqBSOrB6wZS/1HUpJU7j5jyE3JxLJiYcA7HVdVxdlwWN/opRPkZMLGhiOT+vAQ==
+  version "2.13.5"
+  resolved "https://registry.npmjs.org/puppeteer-extra-plugin-adblocker/-/puppeteer-extra-plugin-adblocker-2.13.5.tgz#c86ce94873bf6fe500555d3972eccdcca4914f6f"
+  integrity sha512-HMVWLA1MLrzIGr/A71PYAWZEHENqQOEaQQHtPje0uSLc6QPOQY5tbbocx4BsUiQL2V1FwgT21UU09P5lV4vrZw==
   dependencies:
     "@cliqz/adblocker-puppeteer" "1.23.8"
     debug "^4.1.1"
@@ -587,9 +587,9 @@ puppeteer-extra-plugin-recaptcha@^3.6.6:
     puppeteer-extra-plugin "^3.2.2"
 
 puppeteer-extra-plugin-stealth@^2.11.0:
-  version "2.11.0"
-  resolved "https://registry.npmjs.org/puppeteer-extra-plugin-stealth/-/puppeteer-extra-plugin-stealth-2.11.0.tgz#727cf1edcac98a9f05be609c880cf0383e214f84"
-  integrity sha512-BqckPV95MHP25quZgzBnZJD8S38ZYP4B3HJ3Kr/vibqxJxhK6L1VQ6jnu/JcFKV0wzCIQPrCiiavZnwE5u1C2A==
+  version "2.11.1"
+  resolved "https://registry.npmjs.org/puppeteer-extra-plugin-stealth/-/puppeteer-extra-plugin-stealth-2.11.1.tgz#7d56a27a986cb5eb69dca3c65695ad6444f4e822"
+  integrity sha512-n0wdC0Ilc9tk5L6FWLyd0P2gT8b2fp+2NuB+KB0oTSw3wXaZ0D6WNakjJsayJ4waGzIJFCUHkmK9zgx5NKMoFw==
   dependencies:
     debug "^4.1.1"
     puppeteer-extra-plugin "^3.2.2"
@@ -715,17 +715,17 @@ through@^2.3.8:
   resolved "https://registry.npmjs.org/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
   integrity sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg==
 
-tldts-core@^5.7.87:
-  version "5.7.87"
-  resolved "https://registry.npmjs.org/tldts-core/-/tldts-core-5.7.87.tgz#11bc43b543cf31d06076133e93ed754dcffd6269"
-  integrity sha512-I0nEU8tk6W8qDqVqp7n8NHmvGBhz5GJJf6twiv1D+Z+/ntyR/UxyxxAUY9apqFvaFMpHlc5qfecsBk2Gss0r+Q==
+tldts-core@^5.7.88:
+  version "5.7.88"
+  resolved "https://registry.npmjs.org/tldts-core/-/tldts-core-5.7.88.tgz#d87e499baac4cd5daef4e132f18aeee59ca39120"
+  integrity sha512-MNSlUtyqgNHAj1Go8X9/Pv2ZYapyMX8K22bNUPD6uX/mBtdSXvolS9MeHvhI4GDAwxeqTxGYqUE3IpbPp52apQ==
 
 tldts-experimental@^5.6.21:
-  version "5.7.87"
-  resolved "https://registry.npmjs.org/tldts-experimental/-/tldts-experimental-5.7.87.tgz#2d2717d76e41e93b7963f2626a23982a522f5385"
-  integrity sha512-nqO3GsFHFSz7rVYU2K/3YVCQUj4ujW0sJ4HPZ8NY88OPCR4qrK0ZC8GW3qYOKgUIWMMyu+FZwuzqxcye8smomg==
+  version "5.7.88"
+  resolved "https://registry.npmjs.org/tldts-experimental/-/tldts-experimental-5.7.88.tgz#64d7e1d3c05010aa5867324c8106395f57b7f6a9"
+  integrity sha512-e+6F+CiGjLuIMk6KwmCE9T62D1fgxpboWFeYCMPYV4sMVtK7ZD7YVGPBIBJsIgI+i/bCxhbKdTeBCJBsAatriQ==
   dependencies:
-    tldts-core "^5.7.87"
+    tldts-core "^5.7.88"
 
 tr46@~0.0.3:
   version "0.0.3"
