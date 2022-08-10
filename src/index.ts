@@ -13,7 +13,7 @@ import path from "path";
 import { minimal_args } from "./const";
 
 import { anime, character, person } from "./scraper";
-import { MALResponseError } from "./helpers";
+import { MALResponseError } from "./errors";
 import { AnimeResponse, CharacterResponse, PersonResponse } from "./types";
 
 class MalWebScraper {
@@ -112,3 +112,4 @@ class MalWebScraper {
 
 export default MalWebScraper;
 export * from "./types";
+export * from "./errors";
