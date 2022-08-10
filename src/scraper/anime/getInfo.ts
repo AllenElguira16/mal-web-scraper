@@ -33,14 +33,23 @@ export const getInfo = async (
 
   const source = await info(page, '//span[contains(text(), "Source:")]');
 
-  const genres = await info(page, '//span[contains(text(), "Genres:")]');
+  let genres = await info(page, '//span[contains(text(), "Genres:")]');
 
-  const themes = await info(page, '//span[contains(text(), "Themes:")]');
+  if (genres?.length === 0)
+    genres = await info(page, '//span[contains(text(), "Genre:")]');
 
-  const demographics = await info(
+  let themes = await info(page, '//span[contains(text(), "Themes:")]');
+
+  if (themes?.length === 0)
+    themes = await info(page, '//span[contains(text(), "Themes:")]');
+
+  let demographics = await info(
     page,
     '//span[contains(text(), "Demographics:")]'
   );
+
+  if (demographics?.length)
+    demographics = await info(page, '//span[contains(text(), "Demographic:")]');
 
   const duration = await info(page, '//span[contains(text(), "Duration:")]');
 
