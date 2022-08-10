@@ -13,13 +13,8 @@ import path from "path";
 import { minimal_args } from "./const";
 
 import { anime, character, person } from "./scraper";
-import { serializeError } from "./helpers";
-import {
-  AnimeResponse,
-  CharacterResponse,
-  ErrorResponse,
-  PersonResponse,
-} from "./types";
+import { MALResponseError } from "./helpers";
+import { AnimeResponse, CharacterResponse, PersonResponse } from "./types";
 
 class MalWebScraper {
   private static instance?: MalWebScraper;
@@ -66,28 +61,17 @@ class MalWebScraper {
     return this.instance;
   }
 
-  private static handleError = (error: unknown): ErrorResponse => {
+  private static handleError = (error: unknown) => {
     if (error instanceof TimeoutError) {
-      return {
-        status: 408,
-        data: serializeError(error),
-      };
+      throw new MALResponseError(408, error.message);
     } else if (error instanceof ProtocolError) {
-      return {
-        status: 403,
-        data: serializeError(error),
-      };
+      throw new MALResponseError(403, error.message);
     }
 
-    return {
-      status: 404,
-      data: serializeError(error as Error),
-    };
+    throw new MALResponseError(404, (error as Error).message);
   };
 
-  public static async anime(
-    id: number
-  ): Promise<AnimeResponse | ErrorResponse> {
+  public static async anime(id: number): Promise<AnimeResponse> {
     try {
       return {
         status: 200,
@@ -98,9 +82,7 @@ class MalWebScraper {
     }
   }
 
-  public static async character(
-    id: number
-  ): Promise<CharacterResponse | ErrorResponse> {
+  public static async character(id: number): Promise<CharacterResponse> {
     try {
       return {
         status: 200,
@@ -111,9 +93,7 @@ class MalWebScraper {
     }
   }
 
-  public static async person(
-    id: number
-  ): Promise<PersonResponse | ErrorResponse> {
+  public static async person(id: number): Promise<PersonResponse> {
     try {
       return {
         status: 200,
