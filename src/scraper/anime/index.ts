@@ -6,12 +6,19 @@ import { getInfo } from "./getInfo";
 import { Page } from "puppeteer";
 
 export const anime = async (page: Page, animeMalID: number): Promise<Anime> => {
-  await page.goto(`https://myanimelist.net/anime/${animeMalID}`, {
-    waitUntil: "domcontentloaded",
-    timeout: 50000,
-  });
+  const response = await page.goto(
+    `https://myanimelist.net/anime/${animeMalID}`,
+    {
+      waitUntil: "domcontentloaded",
+      timeout: 50000,
+    }
+  );
 
   await skipBot(page);
+
+  if (response?.status() === 404) {
+    throw new Error(`Anime not found`);
+  }
 
   const link = await page.$$eval(
     ".breadcrumb > .di-ib:nth-of-type(3) > a",

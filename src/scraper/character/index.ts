@@ -11,12 +11,19 @@ export const character = async (
   page: Page,
   characterId: number
 ): Promise<Character> => {
-  await page.goto(`https://myanimelist.net/character/${characterId}`, {
-    waitUntil: "domcontentloaded",
-    timeout: 50000,
-  });
+  const response = await page.goto(
+    `https://myanimelist.net/character/${characterId}`,
+    {
+      waitUntil: "domcontentloaded",
+      timeout: 50000,
+    }
+  );
 
   await skipBot(page);
+
+  if (response?.status() === 404) {
+    throw new Error(`Character not found`);
+  }
 
   await scrollToBottom(page);
 

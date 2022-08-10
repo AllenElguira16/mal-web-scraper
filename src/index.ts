@@ -1,6 +1,8 @@
 import {
   Browser,
   DEFAULT_INTERCEPT_RESOLUTION_PRIORITY,
+  TimeoutError,
+  ProtocolError,
   Page,
 } from "puppeteer";
 import puppeteer from "puppeteer-extra";
@@ -11,6 +13,7 @@ import path from "path";
 import { minimal_args } from "./const";
 
 import { anime, character, person } from "./scraper";
+import { serializeError } from "./helpers";
 
 class MalWebScraper {
   private static instance?: MalWebScraper;
@@ -57,16 +60,56 @@ class MalWebScraper {
     return this.instance;
   }
 
+  private static handleError = (error: unknown) => {
+    if (error instanceof Error)
+      return {
+        status: 404,
+        data: serializeError(error),
+      };
+    else if (error instanceof TimeoutError) {
+      return {
+        status: 408,
+        data: serializeError(error),
+      };
+    } else if (error instanceof ProtocolError) {
+      return {
+        status: 403,
+        data: serializeError(error),
+      };
+    }
+  };
+
   public static async anime(id: number) {
-    return anime(this.instance!.page, id);
+    try {
+      return {
+        status: 200,
+        data: await anime(this.instance!.page, id),
+      };
+    } catch (error) {
+      return this.handleError(error);
+    }
   }
 
   public static async character(id: number) {
-    return character(this.instance!.page, id);
+    try {
+      return {
+        status: 200,
+        data: await character(this.instance!.page, id),
+      };
+    } catch (error) {
+      return this.handleError(error);
+    }
   }
 
   public static async person(id: number) {
-    return person(this.instance!.page, id);
+    try {
+      return {
+        status: 200,
+        data: await person(this.instance!.page, id),
+      };
+    } catch (error) {
+      return this.handleError(error);
+    }
   }
 
   public static async close() {

@@ -5,12 +5,19 @@ import { getAnimeStaff } from "./getAnimeStaff";
 import { Page } from "puppeteer";
 
 export const person = async (page: Page, personId: number): Promise<Person> => {
-  await page.goto(`https://myanimelist.net/people/${personId}`, {
-    waitUntil: "domcontentloaded",
-    timeout: 50000,
-  });
+  const response = await page.goto(
+    `https://myanimelist.net/people/${personId}`,
+    {
+      waitUntil: "domcontentloaded",
+      timeout: 50000,
+    }
+  );
 
   await skipBot(page);
+
+  if (response?.status() === 404) {
+    throw new Error(`Character not found`);
+  }
 
   await scrollToBottom(page);
 
