@@ -61,14 +61,14 @@ class MalWebScraper {
     return this.instance;
   }
 
-  private static handleError = (error: unknown) => {
+  private static handleError = (id: number, error: unknown) => {
     if (error instanceof TimeoutError) {
-      throw new MALResponseError(408, error.message);
+      throw new MALResponseError(408, id, error.message);
     } else if (error instanceof ProtocolError) {
-      throw new MALResponseError(403, error.message);
+      throw new MALResponseError(403, id, error.message);
     }
 
-    throw new MALResponseError(404, (error as Error).message);
+    throw new MALResponseError(404, id, (error as Error).message);
   };
 
   public static async anime(id: number): Promise<AnimeResponse> {
@@ -78,7 +78,7 @@ class MalWebScraper {
         data: await anime(this.instance!.page, id),
       };
     } catch (error) {
-      return this.handleError(error);
+      return this.handleError(id, error);
     }
   }
 
@@ -89,7 +89,7 @@ class MalWebScraper {
         data: await character(this.instance!.page, id),
       };
     } catch (error) {
-      return this.handleError(error);
+      return this.handleError(id, error);
     }
   }
 
@@ -100,7 +100,7 @@ class MalWebScraper {
         data: await person(this.instance!.page, id),
       };
     } catch (error) {
-      return this.handleError(error);
+      return this.handleError(id, error);
     }
   }
 

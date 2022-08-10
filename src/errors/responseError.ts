@@ -1,9 +1,7 @@
 export class MALResponseError extends Error {
-  public code: number;
+  // public code: number;
 
-  constructor(code: number, message: string) {
+  constructor(public code: number, public id: number, public message: string) {
     super(message);
-
-    this.code = code;
   }
 }
