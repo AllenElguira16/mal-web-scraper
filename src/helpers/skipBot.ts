@@ -6,13 +6,12 @@ export const skipBot = async (page: Page) => {
   );
 
   if (isPageCaptcha) {
+    console.log("error here");
     await page.click('.g-recaptcha[data-action="submit"]');
 
-    await page.waitForNavigation();
+    await page.reload();
 
     await page.click('.g-recaptcha[data-action="submit"]');
-
-    await page.waitForNavigation();
 
     await page.reload();
   }
