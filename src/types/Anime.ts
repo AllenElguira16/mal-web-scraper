@@ -24,7 +24,7 @@ export type Anime = {
     picture: string | null;
   };
   relations: {
-    type: "Adaptation" | "Sequel" | "Others" | "Prequel";
+    type: "Adaptation" | "Sequel" | "Other" | "Prequel";
     main_title: string;
     anime_id: number;
   }[];
