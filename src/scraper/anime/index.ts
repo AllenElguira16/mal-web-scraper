@@ -21,6 +21,12 @@ export const anime = async (page: Page, animeMalID: number): Promise<Anime> => {
     throw new Error(`Anime not found`);
   }
 
+  const [pendingAnimeNode] = await page.$x(
+    '//span[contains(text(), "This anime is pending approval.")]'
+  );
+
+  if (!!pendingAnimeNode) throw new Error(`Anime not found`);
+
   const link = await page.$$eval(
     ".breadcrumb > .di-ib:nth-of-type(3) > a",
     ([e]) => e?.getAttribute("href")
