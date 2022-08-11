@@ -56,6 +56,8 @@ class MalWebScraper {
           request.abort();
         else request.continue();
       });
+
+      await this.instance.page.setCacheEnabled(false);
     }
 
     return this.instance;

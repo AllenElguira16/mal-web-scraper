@@ -95,7 +95,7 @@ export const getInfo = async (
   return {
     main_title: mainTitle,
     alternative_titles: alternativeTitles || null,
-    synonyms: synonyms?.split(",") || [],
+    synonyms: synonyms?.split(", ") || [],
     episodes: episodes ? parseInt(episodes, 10) : null,
     type,
     aired,
