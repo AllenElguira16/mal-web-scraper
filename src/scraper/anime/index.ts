@@ -4,6 +4,7 @@ import { getStaffsOfAnime } from "./getStaffsOfAnime";
 import { Anime } from "../../types/Anime";
 import { getInfo } from "./getInfo";
 import { Page } from "puppeteer";
+import { getRelations } from "./getRelations";
 
 export const anime = async (page: Page, animeMalID: number): Promise<Anime> => {
   const response = await page.goto(
@@ -26,6 +27,7 @@ export const anime = async (page: Page, animeMalID: number): Promise<Anime> => {
   );
 
   const info = await getInfo(page);
+  const relations = await getRelations(page);
 
   await page.goto(`${link}/characters`, {
     waitUntil: "domcontentloaded",
@@ -38,6 +40,7 @@ export const anime = async (page: Page, animeMalID: number): Promise<Anime> => {
   return {
     anime_id: animeMalID,
     info,
+    relations,
     characters,
     staffs,
   };
