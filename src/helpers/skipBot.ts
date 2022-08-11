@@ -1,4 +1,5 @@
 import { Page } from "puppeteer";
+import { timeout } from "./timeout";
 
 export const skipBot = async (page: Page) => {
   let isPageCaptcha = await page.evaluate(
@@ -9,11 +10,7 @@ export const skipBot = async (page: Page) => {
     console.log("error here");
     await page.click('.g-recaptcha[data-action="submit"]');
 
-    await page.reload();
-
-    await page.click('.g-recaptcha[data-action="submit"]');
-
-    await page.reload();
+    await timeout(10000);
   }
 
   isPageCaptcha = await page.evaluate(
