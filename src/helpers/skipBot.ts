@@ -1,7 +1,7 @@
 import { Page } from "puppeteer";
 
 export const skipBot = async (page: Page) => {
-  const isPageCaptcha = await page.evaluate(
+  let isPageCaptcha = await page.evaluate(
     () => !!document.querySelector('.g-recaptcha[data-action="submit"]')
   );
 
@@ -17,6 +17,9 @@ export const skipBot = async (page: Page) => {
     await page.reload();
   }
 
-  if (!!document.querySelector('.g-recaptcha[data-action="submit"]'))
-    await skipBot(page);
+  isPageCaptcha = await page.evaluate(
+    () => !!document.querySelector('.g-recaptcha[data-action="submit"]')
+  );
+
+  if (isPageCaptcha) await skipBot(page);
 };
