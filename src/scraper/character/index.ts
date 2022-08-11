@@ -27,10 +27,6 @@ export const character = async (
 
   await scrollToBottom(page);
 
-  await page.waitForSelector(".normal_header:nth-of-type(1)", {
-    timeout: 50000,
-  });
-
   const names = await getNames(page);
 
   const about = await getAbout(page);
