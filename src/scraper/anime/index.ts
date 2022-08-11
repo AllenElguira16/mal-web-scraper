@@ -5,6 +5,7 @@ import { Anime } from "../../types/Anime";
 import { getInfo } from "./getInfo";
 import { Page } from "puppeteer";
 import { getRelations } from "./getRelations";
+import { FetchError } from "../../errors";
 
 export const anime = async (page: Page, animeMalID: number): Promise<Anime> => {
   const response = await page.goto(
@@ -18,7 +19,7 @@ export const anime = async (page: Page, animeMalID: number): Promise<Anime> => {
   await skipBot(page);
 
   if (response?.status() === 404) {
-    throw new Error(`Anime not found`);
+    throw new FetchError(`Anime not found`);
   }
 
   const [pendingAnimeNode] = await page.$x(

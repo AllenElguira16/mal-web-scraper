@@ -6,6 +6,7 @@ import { getAbout } from "./getAbout";
 import { getVoiceActors } from "./getVoiceActors";
 import { Character } from "../../types";
 import { Page } from "puppeteer";
+import { FetchError } from "../../errors";
 
 export const character = async (
   page: Page,
@@ -22,7 +23,7 @@ export const character = async (
   await skipBot(page);
 
   if (response?.status() === 404) {
-    throw new Error(`Character not found`);
+    throw new FetchError(`Character not found`);
   }
 
   await scrollToBottom(page);

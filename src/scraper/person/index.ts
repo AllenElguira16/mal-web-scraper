@@ -3,6 +3,7 @@ import { scrollToBottom, skipBot } from "../../helpers";
 import { getAnime } from "./getAnime";
 import { getAnimeStaff } from "./getAnimeStaff";
 import { Page } from "puppeteer";
+import { FetchError } from "../../errors";
 
 export const person = async (page: Page, personId: number): Promise<Person> => {
   const response = await page.goto(
@@ -16,7 +17,7 @@ export const person = async (page: Page, personId: number): Promise<Person> => {
   await skipBot(page);
 
   if (response?.status() === 404) {
-    throw new Error(`Character not found`);
+    throw new FetchError(`Character not found`);
   }
 
   await scrollToBottom(page);

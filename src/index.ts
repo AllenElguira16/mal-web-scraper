@@ -13,7 +13,7 @@ import path from "path";
 import { minimal_args } from "./const";
 
 import { anime, character, person } from "./scraper";
-import { MALResponseError } from "./errors";
+import { FetchError, MALResponseError } from "./errors";
 import { AnimeResponse, CharacterResponse, PersonResponse } from "./types";
 
 class MalWebScraper {
@@ -66,9 +66,11 @@ class MalWebScraper {
       throw new MALResponseError(408, id, error.message);
     } else if (error instanceof ProtocolError) {
       throw new MALResponseError(403, id, error.message);
+    } else if (error instanceof FetchError) {
+      throw new MALResponseError(404, id, (error as Error).message);
+    } else {
+      throw error;
     }
-
-    throw new MALResponseError(404, id, (error as Error).message);
   };
 
   public static async anime(id: number): Promise<AnimeResponse> {
