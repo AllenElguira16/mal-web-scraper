@@ -23,10 +23,15 @@ export type Anime = {
     background: string | null;
     picture: string | null;
   };
-  relations: {
-    type: "Adaptation" | "Sequel" | "Other" | "Prequel";
+  anime_relations: {
+    type: "Other" | "Prequel" | "Sequel";
     main_title: string;
     anime_id: number;
+  }[];
+  manga_relations: {
+    type: "Adaptation";
+    main_title: string;
+    manga_id: number;
   }[];
   characters: CharacterOnAnime[];
   staffs: StaffOnAnime[];

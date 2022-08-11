@@ -39,14 +39,14 @@ export const getInfo = async (
 
   let themes = await info(page, '//span[contains(text(), "Themes:")]');
 
-  if (!themes) themes = await info(page, '//span[contains(text(), "Themes:")]');
+  if (!themes) themes = await info(page, '//span[contains(text(), "Theme:")]');
 
   let demographics = await info(
     page,
     '//span[contains(text(), "Demographics:")]'
   );
 
-  if (demographics?.length)
+  if (!demographics)
     demographics = await info(page, '//span[contains(text(), "Demographic:")]');
 
   const duration = await info(page, '//span[contains(text(), "Duration:")]');

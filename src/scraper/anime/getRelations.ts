@@ -1,7 +1,9 @@
 import { Page } from "puppeteer";
 import { Anime } from "../../types";
 
-export const getRelations = async (page: Page): Promise<Anime["relations"]> => {
+export const getRelations = async (
+  page: Page
+): Promise<Pick<Anime, "anime_relations" | "manga_relations">> => {
   const [relationsElement] = await page.$x(
     '//h2[contains(text(), "Related Anime")]'
   );
@@ -10,29 +12,55 @@ export const getRelations = async (page: Page): Promise<Anime["relations"]> => {
     relationsElement?.evaluate((relationsNode) => {
       const tableElement = relationsNode.parentElement?.nextElementSibling;
 
-      if (tableElement?.querySelectorAll("tr") === undefined) return [];
+      if (tableElement?.querySelectorAll("tr") === undefined)
+        return {
+          anime_relations: [],
+          manga_relations: [],
+        };
 
-      const relations: Anime["relations"] = [];
+      const animeRelations: Anime["anime_relations"] = [];
+      const mangaRelations: Anime["manga_relations"] = [];
 
       for (const trElement of Array.from(tableElement.querySelectorAll("tr"))) {
-        const animeType = trElement.querySelector("td:nth-of-type(1)");
-        const animeLinks = trElement.querySelector("td:nth-of-type(2)");
+        const animeTypeElement = trElement.querySelector("td:nth-of-type(1)");
+        const animeLinksElement = trElement.querySelector("td:nth-of-type(2)");
 
-        animeLinks?.querySelectorAll("a").forEach((animeLink) => {
-          const link = animeLink.getAttribute("href") as string;
+        const animeType = animeTypeElement?.textContent?.slice(0, -1) as
+          | "Other"
+          | "Prequel"
+          | "Sequel"
+          | "Adaptation";
 
-          relations.push({
-            type: animeType?.textContent?.slice(
-              0,
-              -1
-            ) as Anime["relations"][number]["type"],
-            anime_id: parseInt(link.split("/")[link.split("/").length - 2]),
-            main_title: animeLink.textContent as string,
-          });
+        animeLinksElement?.querySelectorAll("a").forEach((animeLinkElement) => {
+          const animeLink = animeLinkElement.getAttribute("href") as string;
+
+          if (animeType === "Adaptation") {
+            mangaRelations.push({
+              type: "Adaptation",
+              manga_id: parseInt(
+                animeLink.split("/")[animeLink.split("/").length - 2]
+              ),
+              main_title: animeLinkElement.textContent as string,
+            });
+          } else {
+            animeRelations.push({
+              type: animeType,
+              anime_id: parseInt(
+                animeLink.split("/")[animeLink.split("/").length - 2]
+              ),
+              main_title: animeLinkElement.textContent as string,
+            });
+          }
         });
       }
 
-      return relations;
-    }) || []
+      return {
+        anime_relations: animeRelations,
+        manga_relations: mangaRelations,
+      };
+    }) || {
+      anime_relations: [],
+      manga_relations: [],
+    }
   );
 };

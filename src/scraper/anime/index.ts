@@ -40,7 +40,7 @@ export const anime = async (page: Page, animeMalID: number): Promise<Anime> => {
   return {
     anime_id: animeMalID,
     info,
-    relations,
+    ...relations,
     characters,
     staffs,
   };
