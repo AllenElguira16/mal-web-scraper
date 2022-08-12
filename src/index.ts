@@ -41,6 +41,7 @@ export default class MalWebScraper {
         headless: true,
         args: minimal_args,
         userDataDir: path.resolve(__dirname, "../../.cache"),
+        dumpio: true,
       });
 
       // Create a new incognito browser context.
