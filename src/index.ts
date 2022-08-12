@@ -63,8 +63,6 @@ export default class MalWebScraper {
 
     await this.instance.page.setCacheEnabled(false);
 
-    console.log(this);
-
     return this.instance;
   }
 
