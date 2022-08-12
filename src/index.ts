@@ -36,33 +36,34 @@ export default class MalWebScraper {
   public static async init() {
     if (!this.instance) this.instance = new MalWebScraper();
 
-    if (!this.instance.browser || !this.instance.page) {
-      this.instance.browser = await puppeteer.launch({
-        headless: true,
-        args: minimal_args,
-        userDataDir: path.resolve(__dirname, "../../.cache"),
-        dumpio: true,
-      });
+    // Close other existing connections
+    await this.close();
 
-      // Create a new incognito browser context.
-      const context =
-        await this.instance.browser.createIncognitoBrowserContext();
-      // Create a new page in a pristine context.
-      this.instance.page = await context.newPage();
+    this.instance.browser = await puppeteer.launch({
+      headless: true,
+      args: minimal_args,
+      userDataDir: path.resolve(__dirname, "../../.cache"),
+    });
 
-      const blocked_domains = ["googlesyndication.com", "adservice.google.com"];
+    // Create a new incognito browser context.
+    const context = await this.instance.browser.createIncognitoBrowserContext();
+    // Create a new page in a pristine context.
+    this.instance.page = await context.newPage();
 
-      await this.instance.page.setRequestInterception(true);
+    const blocked_domains = ["googlesyndication.com", "adservice.google.com"];
 
-      this.instance.page.on("request", (request) => {
-        const url = request.url();
-        if (blocked_domains.some((domain) => url.includes(domain)))
-          request.abort();
-        else request.continue();
-      });
+    await this.instance.page.setRequestInterception(true);
 
-      await this.instance.page.setCacheEnabled(false);
-    }
+    this.instance.page.on("request", (request) => {
+      const url = request.url();
+      if (blocked_domains.some((domain) => url.includes(domain)))
+        request.abort();
+      else request.continue();
+    });
+
+    await this.instance.page.setCacheEnabled(false);
+
+    console.log(this);
 
     return this.instance;
   }
@@ -113,7 +114,7 @@ export default class MalWebScraper {
   }
 
   public static async close() {
-    await this.instance!.page.close();
-    await this.instance!.browser.close();
+    await this.instance!.page?.close();
+    await this.instance!.browser?.close();
   }
 }

@@ -1,21 +1,19 @@
 import { Page } from "puppeteer";
-import { timeout } from "./timeout";
+import { setTimeout } from "timers/promises";
 
 export const skipBot = async (page: Page) => {
-  let isPageCaptcha = await page.evaluate(
-    () => !!document.querySelector('.g-recaptcha[data-action="submit"]')
-  );
+  // let isPageCaptcha = ;
 
-  if (isPageCaptcha) {
-    console.log("error here");
+  if (await recaptchaButtonExists(page)) {
     await page.click('.g-recaptcha[data-action="submit"]');
 
-    await timeout(10000);
+    await setTimeout(10000);
   }
 
-  isPageCaptcha = await page.evaluate(
+  if (await recaptchaButtonExists(page)) await skipBot(page);
+};
+
+const recaptchaButtonExists = async (page: Page) =>
+  page.evaluate(
     () => !!document.querySelector('.g-recaptcha[data-action="submit"]')
   );
-
-  if (isPageCaptcha) await skipBot(page);
-};
