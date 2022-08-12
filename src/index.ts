@@ -16,7 +16,10 @@ import { anime, character, person } from "./scraper";
 import { FetchError, MALResponseError } from "./errors";
 import { AnimeResponse, CharacterResponse, PersonResponse } from "./types";
 
-class MalWebScraper {
+export * from "./types";
+export * from "./errors";
+
+export default class MalWebScraper {
   private static instance?: MalWebScraper;
   private browser!: Browser;
   private page!: Page;
@@ -56,6 +59,8 @@ class MalWebScraper {
           request.abort();
         else request.continue();
       });
+
+      await this.instance.page.setCacheEnabled(false);
     }
 
     return this.instance;
@@ -111,7 +116,3 @@ class MalWebScraper {
     await this.instance!.browser.close();
   }
 }
-
-export default MalWebScraper;
-export * from "./types";
-export * from "./errors";
