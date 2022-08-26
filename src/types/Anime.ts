@@ -24,7 +24,7 @@ export type Anime = {
     picture: string | null;
   };
   anime_relations: {
-    type: Omit<RelationType, "Adaptation">;
+    type: Exclude<RelationType, "Adaptation">;
     main_title: string;
     anime_id: number;
   }[];
