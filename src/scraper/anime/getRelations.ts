@@ -1,5 +1,5 @@
 import { Page } from "puppeteer";
-import { Anime } from "../../types";
+import { Anime, RelationType } from "../../types";
 
 export const getRelations = async (
   page: Page
@@ -23,35 +23,41 @@ export const getRelations = async (
 
       for (const trElement of Array.from(tableElement.querySelectorAll("tr"))) {
         const animeTypeElement = trElement.querySelector("td:nth-of-type(1)");
-        const animeLinksElement = trElement.querySelector("td:nth-of-type(2)");
+        const animeLinksElement =
+          trElement.querySelector("td:nth-of-type(2)")?.querySelectorAll("a") ||
+          [];
 
-        const animeType = animeTypeElement?.textContent?.slice(0, -1) as
-          | "Other"
-          | "Prequel"
-          | "Sequel"
-          | "Adaptation";
+        const animeType = animeTypeElement?.textContent?.slice(
+          0,
+          -1
+        ) as RelationType;
 
-        animeLinksElement?.querySelectorAll("a").forEach((animeLinkElement) => {
-          const animeLink = animeLinkElement.getAttribute("href") as string;
+        for (const animeLinkElement of Array.from(animeLinksElement)) {
+          const animeLink = animeLinkElement.getAttribute("href");
+
+          if (!animeLink) continue;
+
+          const ID: number | null = parseInt(
+            animeLink.split("/")[animeLink.split("/").length - 2]
+          );
+
+          if (!animeLinkElement || animeLinkElement.textContent?.length === 0)
+            continue;
 
           if (animeType === "Adaptation") {
             mangaRelations.push({
               type: "Adaptation",
-              manga_id: parseInt(
-                animeLink.split("/")[animeLink.split("/").length - 2]
-              ),
+              manga_id: ID,
               main_title: animeLinkElement.textContent as string,
             });
           } else {
             animeRelations.push({
               type: animeType,
-              anime_id: parseInt(
-                animeLink.split("/")[animeLink.split("/").length - 2]
-              ),
+              anime_id: ID,
               main_title: animeLinkElement.textContent as string,
             });
           }
-        });
+        }
       }
 
       return {

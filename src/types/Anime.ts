@@ -24,18 +24,32 @@ export type Anime = {
     picture: string | null;
   };
   anime_relations: {
-    type: "Other" | "Prequel" | "Sequel";
+    type: Omit<RelationType, "Adaptation">;
     main_title: string;
     anime_id: number;
   }[];
   manga_relations: {
-    type: "Adaptation";
+    type: Extract<RelationType, "Adaptation">;
     main_title: string;
     manga_id: number;
   }[];
   characters: CharacterOnAnime[];
   staffs: StaffOnAnime[];
 };
+
+export type RelationType =
+  | "Prequel"
+  | "Sequel"
+  | "Alternative setting"
+  | "Alternative version"
+  | "Side story"
+  | "Summary"
+  | "Full story"
+  | "Parent story"
+  | "Spin-off"
+  | "Character"
+  | "Other"
+  | "Adaptation";
 
 export type CharacterOnAnime = {
   character_id: number;
