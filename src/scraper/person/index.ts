@@ -61,7 +61,7 @@ export const person = async (page: Page, personId: number): Promise<Person> => {
           currentElement = currentElement.nextSibling;
         }
 
-        return aboutText.replaceAll(/\<(\S+)[^>]*/g, "<$1");
+        return aboutText.replaceAll(/\<([a-z]+)[^>]*/g, "<$1");
       }
     )) || null;
 
