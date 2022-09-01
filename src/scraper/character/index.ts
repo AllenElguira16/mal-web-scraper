@@ -37,11 +37,21 @@ export const character = async (
     ([imgNode]) => imgNode?.getAttribute("data-src") || null
   );
 
+  const [birthDateElement] = await page.$x(
+    '//text()[contains(., "Birthday:")]'
+  );
+
+  const birthDate =
+    (await birthDateElement?.evaluate(
+      (birthDateNode) => birthDateNode.textContent
+    )) || null;
+
   return {
     character_id: characterId,
     ...names,
     about,
     picture,
+    birthday: birthDate,
     anime: await getAnime(page),
     manga: await getManga(page),
     voice_actors: await getVoiceActors(page),

@@ -1,13 +1,14 @@
 export type Character = {
   character_id: number;
   about: string | null;
+  english_name: string | null;
+  kanji_name: string | null;
+  birthday: string | null;
+  nicknames: string[];
+  picture: string | null;
   anime: AnimeOfCharacter[];
   manga: MangaOfCharacter[];
   voice_actors: VoiceActorOfCharacter[];
-  native_name: string | null;
-  english_name: string;
-  nicknames: string[];
-  picture: string | null;
 };
 
 export type AnimeOfCharacter = {

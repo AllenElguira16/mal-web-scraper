@@ -1,8 +1,7 @@
 export type Person = {
   person_id: number;
   english_name: string;
-  first_name: string | null;
-  last_name: string | null;
+  kanji_name: string | null;
   birthday: string | null;
   about: string | null;
   picture: string | null;

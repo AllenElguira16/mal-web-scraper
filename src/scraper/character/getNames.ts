@@ -3,7 +3,7 @@ import { Character } from "../../types";
 
 export const getNames = async (
   page: Page
-): Promise<Pick<Character, "english_name" | "native_name" | "nicknames">> => {
+): Promise<Pick<Character, "kanji_name" | "english_name" | "nicknames">> => {
   return {
     ...(await page.$$eval(".normal_header:nth-of-type(1)", ([nameElement]) => {
       const name = nameElement?.textContent as string;
@@ -12,17 +12,13 @@ export const getNames = async (
 
       if (!match)
         return {
-          native_name: null,
-          english_name: name.trim(),
+          kanji_name: null,
         };
 
       const nativeName = match[1];
 
-      const englishName = name.replace(`(${nativeName})`, "").trim();
-
       return {
-        native_name: nativeName,
-        english_name: englishName,
+        kanji_name: nativeName?.trim() ?? null,
       };
     })),
     ...(await page.$$eval(
@@ -30,14 +26,21 @@ export const getNames = async (
       ([nameElement]) => {
         const name = nameElement?.textContent as string;
 
-        const match = name.match(/.+\"(.+)\".+/);
+        const match = name.match(/(.+)\"(.+)\"(.+)/);
 
         if (!match)
           return {
+            english_name: name,
             nicknames: [],
           };
 
-        return { nicknames: match[1].split(", ") };
+        return {
+          english_name:
+            match[1] && match[3]
+              ? `${match[1].trim()}, ${match[3].trim()}`
+              : null,
+          nicknames: match[2]?.split(", "),
+        };
       }
     )),
   };

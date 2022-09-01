@@ -51,7 +51,11 @@ export const person = async (page: Page, personId: number): Promise<Person> => {
 
   const birthDate =
     (await birthDateElement?.evaluate((birthDateNode) =>
-      birthDateNode.nextSibling?.textContent?.trim()
+      birthDateNode.nextSibling?.textContent
+        ?.trim()
+        .split(" ")
+        .filter((s) => s !== "")
+        .join(" ")
     )) || null;
 
   const about =
@@ -74,8 +78,7 @@ export const person = async (page: Page, personId: number): Promise<Person> => {
   return {
     person_id: personId,
     english_name: englishName,
-    first_name: givenName,
-    last_name: familyName,
+    kanji_name: `${givenName} ${familyName}`,
     birthday: birthDate === "Unknown" ? null : birthDate,
     about,
     picture,
