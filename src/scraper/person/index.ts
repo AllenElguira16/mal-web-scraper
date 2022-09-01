@@ -37,6 +37,8 @@ export const person = async (page: Page, personId: number): Promise<Person> => {
     '//*[contains(text(), "Birthday:")]'
   );
 
+  const [MoreElement] = await page.$x('//*[contains(text(), "More:")]');
+
   const givenName =
     (await givenNameElement?.evaluate((givenNameNode) =>
       givenNameNode.nextSibling?.textContent?.trim()
@@ -52,6 +54,14 @@ export const person = async (page: Page, personId: number): Promise<Person> => {
       birthDateNode.nextSibling?.textContent?.trim()
     )) || null;
 
+  const about =
+    (await MoreElement?.evaluate((moreNode) =>
+      moreNode.parentElement?.nextElementSibling?.outerHTML
+        ?.trim()
+        .replaceAll("\n", "")
+        .replaceAll(/\<div[^>]*/g, "<div")
+    )) || null;
+
   const picture = await page.$$eval(
     "#content > table > tbody > tr > td:nth-of-type(1).borderClass > div > a > img",
     ([img]) => img?.getAttribute("data-src") || null
@@ -64,8 +74,10 @@ export const person = async (page: Page, personId: number): Promise<Person> => {
   return {
     person_id: personId,
     english_name: englishName,
-    native_name: givenName && familyName ? familyName + " " + givenName : null,
+    first_name: givenName,
+    last_name: familyName,
     birthday: birthDate === "Unknown" ? null : birthDate,
+    about,
     picture,
     anime,
     staff,
