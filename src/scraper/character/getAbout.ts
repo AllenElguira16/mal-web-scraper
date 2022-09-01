@@ -22,7 +22,7 @@ export const getAbout = async (page: Page) => {
         about += `<div class="spoiler"><button>Toggle Spoiler</button>`;
 
       if (currentSynopsisElement.textContent.trim().length !== 0) {
-        about += `<div>${currentSynopsisElement.textContent}</div>`;
+        about += `<div>${currentSynopsisElement.textContent.trim()}</div>`;
       }
 
       if (

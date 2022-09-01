@@ -26,34 +26,38 @@ export const getNames = async (
       ([nameElement]) => {
         const name = nameElement?.textContent as string;
 
-        const match = name.match(/(.+)\"(.+)\"(.+)/);
+        const match = name.match(/(.+)?\s\"(.+)\"?\s(.*)/);
 
-        if (!match) {
-          const matchGerman = name.match(
-            /([A-Z][a-zA-Z\s]*)? (?=[a-z]+)([a-z]+) ([A-Z][a-zA-Z\-]*)/
-          );
-          if (matchGerman) {
-            return {
-              english_name: `${matchGerman[2].trim()} ${matchGerman[3].trim()}, ${matchGerman[1].trim()}`,
-              nicknames: [],
-            };
-          }
+        if (match) {
+          const [, firstName, nicknames, lastName] = match;
+          let englishName = firstName;
+
+          if (lastName) englishName = lastName + ", " + firstName;
+
           return {
-            english_name: name
-              .split(" ")
-              .filter((s) => s !== "")
-              .reverse()
-              .join(", "),
+            english_name: englishName,
+            nicknames: nicknames.split(", "),
+          };
+        }
+
+        const matchGerman = name.match(
+          /([A-Z][a-zA-Z\s]*)? (?=[a-z]+)([a-z]+) ([A-Z][a-zA-Z\-]*)/
+        );
+
+        if (matchGerman) {
+          return {
+            english_name: `${matchGerman[2].trim()} ${matchGerman[3].trim()}, ${matchGerman[1].trim()}`,
             nicknames: [],
           };
         }
 
         return {
-          english_name:
-            match[1] && match[3]
-              ? `${match[1].trim()}, ${match[3].trim()}`
-              : null,
-          nicknames: match[2]?.split(", "),
+          english_name: name
+            .split(" ")
+            .filter((s) => s !== "")
+            .reverse()
+            .join(", "),
+          nicknames: [],
         };
       }
     )),
