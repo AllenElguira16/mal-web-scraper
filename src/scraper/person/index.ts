@@ -33,11 +33,6 @@ export const person = async (page: Page, personId: number): Promise<Person> => {
   const [familyNameElement] = await page.$x(
     '//*[contains(text(), "Family name:")]'
   );
-  const [, birthDateElement] = await page.$x(
-    '//*[contains(text(), "Birthday:")]'
-  );
-
-  const [MoreElement] = await page.$x('//*[contains(text(), "More:")]');
 
   const givenName =
     (await givenNameElement?.evaluate((givenNameNode) =>
@@ -49,21 +44,25 @@ export const person = async (page: Page, personId: number): Promise<Person> => {
       familyNameNode.nextSibling?.textContent?.trim()
     )) || null;
 
-  const birthDate =
-    (await birthDateElement?.evaluate((birthDateNode) =>
-      birthDateNode.nextSibling?.textContent
-        ?.trim()
-        .split(" ")
-        .filter((s) => s !== "")
-        .join(" ")
-    )) || null;
-
   const about =
-    (await MoreElement?.evaluate((moreNode) =>
-      moreNode.parentElement?.nextElementSibling?.outerHTML
-        ?.trim()
-        .replaceAll("\n", "")
-        .replaceAll(/\<div[^>]*/g, "<div")
+    (await page.$$eval(
+      "#content > table > tbody > tr > td:nth-of-type(1) .spaceit_pad",
+      ([aboutNode]) => {
+        let currentElement: Element | ChildNode | null = aboutNode;
+        let aboutText = "";
+
+        while (currentElement !== null) {
+          if (currentElement instanceof Element) {
+            aboutText += currentElement.outerHTML.trim();
+          } else {
+            aboutText += `<div>${currentElement.textContent?.trim()}</div>`;
+          }
+
+          currentElement = currentElement.nextSibling;
+        }
+
+        return aboutText.replaceAll(/\<(\S+)[^>]*/g, "<$1");
+      }
     )) || null;
 
   const picture = await page.$$eval(
@@ -79,7 +78,6 @@ export const person = async (page: Page, personId: number): Promise<Person> => {
     person_id: personId,
     english_name: englishName,
     kanji_name: `${givenName} ${familyName}`,
-    birthday: birthDate === "Unknown" ? null : birthDate,
     about,
     picture,
     anime,

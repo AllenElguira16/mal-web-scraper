@@ -3,7 +3,6 @@ export type Character = {
   about: string | null;
   english_name: string | null;
   kanji_name: string | null;
-  birthday: string | null;
   nicknames: string[];
   picture: string | null;
   anime: AnimeOfCharacter[];

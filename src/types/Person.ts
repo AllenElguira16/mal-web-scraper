@@ -1,9 +1,8 @@
 export type Person = {
   person_id: number;
+  about: string | null;
   english_name: string;
   kanji_name: string | null;
-  birthday: string | null;
-  about: string | null;
   picture: string | null;
   anime: AnimeOfPerson[];
   staff: StaffOfPerson[];

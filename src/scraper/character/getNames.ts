@@ -28,11 +28,25 @@ export const getNames = async (
 
         const match = name.match(/(.+)\"(.+)\"(.+)/);
 
-        if (!match)
+        if (!match) {
+          const matchGerman = name.match(
+            /([A-Z][a-zA-Z\s]*)? (?=[a-z]+)([a-z]+) ([A-Z][a-zA-Z\-]*)/
+          );
+          if (matchGerman) {
+            return {
+              english_name: `${matchGerman[2].trim()} ${matchGerman[3].trim()}, ${matchGerman[1].trim()}`,
+              nicknames: [],
+            };
+          }
           return {
-            english_name: name,
+            english_name: name
+              .split(" ")
+              .filter((s) => s !== "")
+              .reverse()
+              .join(", "),
             nicknames: [],
           };
+        }
 
         return {
           english_name:
