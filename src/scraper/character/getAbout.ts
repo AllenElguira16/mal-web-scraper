@@ -8,16 +8,32 @@ export const getAbout = async (page: Page) => {
 
     while (currentSynopsisElement) {
       if (
-        currentSynopsisElement instanceof Element &&
-        currentSynopsisElement.tagName === "DIV"
+        (currentSynopsisElement instanceof Element &&
+          currentSynopsisElement.tagName === "DIV" &&
+          currentSynopsisElement.classList.contains("normal_header")) ||
+        currentSynopsisElement.textContent === null
       )
         break;
 
-      about += currentSynopsisElement.textContent;
+      if (
+        currentSynopsisElement instanceof Element &&
+        currentSynopsisElement.classList.contains("spoiler")
+      )
+        about += `<div class="spoiler"><button>Toggle Spoiler</button>`;
+
+      if (currentSynopsisElement.textContent.trim().length !== 0) {
+        about += `<div>${currentSynopsisElement.textContent}</div>`;
+      }
+
+      if (
+        currentSynopsisElement instanceof Element &&
+        currentSynopsisElement.classList.contains("spoiler")
+      )
+        about += "</div>";
 
       currentSynopsisElement = currentSynopsisElement.nextSibling;
     }
 
-    return about === "No biography written." ? null : about;
+    return about === "No biography written." ? null : about.trim();
   });
 };

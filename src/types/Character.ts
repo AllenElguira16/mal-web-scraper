@@ -6,6 +6,7 @@ export type Character = {
   voice_actors: VoiceActorOfCharacter[];
   native_name: string | null;
   english_name: string;
+  nicknames: string[];
   picture: string | null;
 };
 
