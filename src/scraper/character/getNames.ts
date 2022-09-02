@@ -9,7 +9,7 @@ export const getNames = async (
       const name = nameElement?.textContent as string;
 
       const match = name.match(
-        /[A-Z][a-zA-Z\-]*\s*?(?:\([A-Z][a-zA-Z\-\s]*\))\s*?(?:\((.*)\))/
+        /[A-Z][a-zA-Z\-]*\s*?(?:\([A-Z][a-zA-Z\-\s]*\))?\s*?(?:\((.*)\))/
       );
 
       if (!match)
