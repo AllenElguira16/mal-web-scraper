@@ -26,13 +26,19 @@ export const getNames = async (
       ([nameElement]) => {
         const name = nameElement?.textContent as string;
 
-        const match = name.match(/(.+)?\s\"(.+)\"?\s(.*)/);
+        const match =
+          /(?<firstName>.*)(?:\s+)(?:"(?<nicknames>[\S\,\s]*)")(?:\s*)(?<lastName>.*)/.exec(
+            name
+          );
 
-        if (match) {
-          const [, firstName, nicknames, lastName] = match;
+        if (match && match.groups) {
+          const {
+            groups: { firstName, nicknames, lastName },
+          } = match;
           let englishName = firstName;
 
-          if (lastName) englishName = lastName + ", " + firstName;
+          if (lastName && lastName.length !== 0)
+            englishName = lastName + ", " + firstName;
 
           return {
             english_name: englishName,
