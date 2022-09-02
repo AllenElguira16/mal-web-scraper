@@ -8,9 +8,7 @@ export const getNames = async (
     ...(await page.$$eval(".normal_header:nth-of-type(1)", ([nameElement]) => {
       const name = nameElement?.textContent as string;
 
-      const match = name.match(
-        /[A-Z][a-zA-Z\-]*\s*?(?:\([A-Z][a-zA-Z\-\s]*\))?\s*?(?:\((.*)\))/
-      );
+      const match = name.match(/.*\s*?(?:\(.*\))?\s*?(?:\((.*)\))/);
 
       if (!match)
         return {
